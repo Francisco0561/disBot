@@ -14,12 +14,15 @@ client.on('ready', (c) => {
     console.log(`${c.user.username} is online`);
 })
 
-client.on('messageCreate',  (message) => {
-    if (message.author.bot) {
-        return;
+client.on('interactionCreate', (interation) => {
+    if (!interation.isChatInputCommand()) return;
+
+    if (interation.commandName === "add") {
+        const num1 = interation.options.get('first-number').value;
+        const num2 = interation.options.get('second-number').value;
+        
+        interation.reply(`The sum is ${num1 + num2}`);
     }
-    if (message.content == 'hello')
-    message.reply('What up!');
-})
+});
 
 client.login(process.env.TOKEN);
